@@ -1,0 +1,57 @@
+Project: Weather-Driven Avatar Dashboard (MVP)
+
+Overview
+
+* Short summary: A mobile/web/desktop dashboard that pulls local weather and area data to create actionable, location-relevant activities for users. Completing activities grants XP and items which modify a full-body avatar and its background — "a rendition of \[local] outside world" — that reflects the user's real-world environment and progress.
+
+Goals (MVP)
+
+* Fetch local weather + basic area data (temperature, precipitation, wind, air quality, sunrise/sunset).
+* Show a dashboard with current conditions, 24-hour forecast, and suggested activities.
+* Let users log activity completion to gain XP and receive items.
+* Generate a full-body avatar and a background image representing the local outside world; allow basic dressing with items.
+* Track inventory, XP, level, and item upgrades.
+
+Key Features
+
+* Data ingestion: Use device geolocation to request weather and area data from a local-weather API (e.g., Open-Meteo, OpenWeatherMap) or local sensors when available.
+* Dashboard: Cards for current weather, short forecast, activity suggestions, nearby POI highlights, and avatar preview.
+* Activities engine: Map weather/area data to prioritized activities (e.g., "Take a walk" when clear, "Wear a jacket" when cold). Each activity has XP reward and possible item drops.
+* Progression: XP, levels, and item rarity tiers. Items combine into "even cooler items" through upgrade recipes.
+* Avatar \& background: Full-body avatar renderer (2D or simple 3D) plus background composition that incorporates local landmarks or environmental cues from area data.
+
+Data Model (high level)
+
+* User: id, displayName, location (lat/lon), level, xp, inventory, equippedItems.
+* WeatherSnapshot: timestamp, location, tempC, conditionCode, precipitationMm, windKph, aqi, sunrise, sunset.
+* Activity: id, title, description, conditions (rules), xpReward, itemDrops.
+* Item: id, name, tier, attributes (cosmetic tags), upgradeRecipe.
+
+UX Flow (MVP)
+
+1. On first-run request location permission.
+2. Dashboard shows local weather + avatar preview.
+3. App suggests 3-5 activities ranked by relevance.
+4. User taps an activity to view details and logs completion when done.
+5. On completion, grant XP and possibly items; update avatar/inventory.
+
+Technical Notes
+
+* Backend: Optional. MVP can be a client-first app using local storage and direct API calls to weather services. For multi-device sync, add a simple REST backend with user auth.
+* APIs: Use geolocation APIs, Open-Meteo/OpenWeatherMap for weather, optional Places/POI APIs for landmarks.
+* Avatar generation: Start with configurable 2D SVG avatars; upgrade to stylized rendered images later. Background can be procedurally composed from weather icons, time-of-day tints, and local landmark images when available.
+* Privacy \& permissions: Only use coarse location unless user opts in to precise. Clearly document data retention and provide opt-out.
+
+MVP Success Criteria
+
+* App pulls correct local weather for user's location.
+* Dashboard shows suggested activities that change with weather.
+* Users can log activities and receive XP/items; avatar updates reflect inventory.
+* Basic avatar customization works (equip/unequip items).
+
+Next Steps
+
+* Research weather APIs, licensing, and rate limits.
+* Draft data schemas and API endpoints for a backend.
+* Create wireframe for dashboard and avatar editor.
+
